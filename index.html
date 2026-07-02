@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AERO F1 VADODARA — Race Predictions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0B0B0C;
+    --paper: #F7F5F0;
+    --red: #E10600;
+    --gold: #C9A227;
+    --silver: #9AA0A6;
+    --bronze: #A8672E;
+    --line: #D8D4C8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Oswald', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-image:
+      repeating-linear-gradient(45deg, #00000006 0, #00000006 1px, transparent 1px, transparent 12px);
+  }
+
+  .card {
+    width: 100%;
+    max-width: 640px;
+    background: #fff;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  }
+
+  .flag-corner {
+    position: absolute;
+    top: 0; left: 0;
+    width: 130px;
+    height: 130px;
+    background-image:
+      linear-gradient(45deg, #0B0B0C 25%, transparent 25%),
+      linear-gradient(-45deg, #0B0B0C 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #0B0B0C 75%),
+      linear-gradient(-45deg, transparent 75%, #0B0B0C 75%);
+    background-size: 26px 26px;
+    background-position: 0 0, 0 13px, 13px -13px, -13px 0px;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    opacity: 0.92;
+  }
+
+  .header {
+    padding: 40px 40px 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(34px, 7vw, 52px);
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .round-meta {
+    margin-top: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #55534d;
+  }
+
+  .round-meta b { color: var(--ink); }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 22px 40px 0;
+  }
+  .divider .line { flex: 1; height: 1px; background: var(--line); }
+  .divider span { color: var(--red); font-size: 14px; }
+
+  form { padding: 24px 40px 8px; }
+
+  .field {
+    margin-bottom: 22px;
+  }
+
+  .field-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .field-label .pts {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--ink);
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .field-label.p1 .pts { background: var(--gold); color: #1a1400; }
+  .field-label.p2 .pts { background: var(--silver); color: #1a1a1a; }
+  .field-label.p3 .pts { background: var(--bronze); color: #fff; }
+  .field-label.dotd .pts { background: var(--red); }
+
+  input[type="text"], select {
+    width: 100%;
+    padding: 13px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 2px;
+    transition: border-color 0.15s ease;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230B0B0C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+  }
+
+  input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  .points-strip {
+    margin: 8px 40px 0;
+    padding: 16px;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-align: center;
+  }
+  .points-strip div b {
+    display: block;
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+  .points-strip .p1 b { color: var(--gold); }
+  .points-strip .p2 b { color: var(--silver); }
+  .points-strip .p3 b { color: var(--bronze); }
+  .points-strip .dotd b { color: var(--red); }
+
+  .submit-btn {
+    width: calc(100% - 80px);
+    margin: 28px 40px 40px;
+    padding: 16px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.15s ease;
+  }
+  .submit-btn:hover { background: #c00500; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { background: #999; cursor: not-allowed; }
+
+  .footer-tag {
+    text-align: center;
+    padding: 0 40px 28px;
+    font-family: 'Anton', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .footer-tag .accent { color: var(--red); }
+
+  /* Success state */
+  .success-screen {
+    display: none;
+    padding: 70px 40px;
+    text-align: center;
+  }
+  .success-screen.active { display: block; }
+  form.hidden { display: none; }
+  .points-strip.hidden { display: none; }
+
+  .checker {
+    width: 64px; height: 64px;
+    margin: 0 auto 20px;
+    background-image:
+      linear-gradient(45deg, #0B0B0C 25%, transparent 25%),
+      linear-gradient(-45deg, #0B0B0C 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #0B0B0C 75%),
+      linear-gradient(-45deg, transparent 75%, #0B0B0C 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  }
+
+  .success-screen h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .success-screen p {
+    font-family: 'Inter', sans-serif;
+    color: #55534d;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .success-screen .red { color: var(--red); }
+
+  @media (max-width: 480px) {
+    .header, form, .footer-tag { padding-left: 24px; padding-right: 24px; }
+    .points-strip { margin-left: 24px; margin-right: 24px; padding: 12px 8px; font-size: 10px;}
+    .points-strip div b { font-size: 15px; }
+    .submit-btn { width: calc(100% - 48px); margin-left: 24px; margin-right: 24px; }
+    .divider { margin-left: 24px; margin-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="flag-corner"></div>
+
+  <div class="header">
+    <div class="eyebrow">AERO F1 VADODARA</div>
+    <h1>Race Predictions</h1>
+    <div class="round-meta">Round <b>9</b> — <b>British Grand Prix</b> · Silverstone Circuit, UK · 3–5 July 2026</div>
+  </div>
+
+  <div class="divider"><div class="line"></div><span>&#9670;</span><div class="line"></div></div>
+
+  <form id="predictionForm">
+    <div class="field" style="margin-top:24px;">
+      <div class="field-label">Name</div>
+      <input type="text" id="name" required placeholder="Your full name">
+    </div>
+
+    <div class="field">
+      <div class="field-label p1">P1 — Race Winner <span class="pts">5 PTS</span></div>
+      <select id="p1" required></select>
+    </div>
+
+    <div class="field">
+      <div class="field-label p2">P2 <span class="pts">4 PTS</span></div>
+      <select id="p2" required></select>
+    </div>
+
+    <div class="field">
+      <div class="field-label p3">P3 <span class="pts">3 PTS</span></div>
+      <select id="p3" required></select>
+    </div>
+
+    <div class="field">
+      <div class="field-label dotd">Driver of the Day <span class="pts">3 PTS</span></div>
+      <select id="dotd" required></select>
+    </div>
+  </form>
+
+  <div class="points-strip" id="pointsStrip">
+    <div class="p1"><b>5</b>P1</div>
+    <div class="p2"><b>4</b>P2</div>
+    <div class="p3"><b>3</b>P3</div>
+    <div class="dotd"><b>3</b>DOTD</div>
+    <div><b>15</b>MAX</div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn" onclick="submitPrediction()">Lock In Prediction</button>
+
+  <div class="success-screen" id="successScreen">
+    <div class="checker"></div>
+    <h2>Prediction <span class="red">Locked In</span></h2>
+    <p>Your picks are in for Round 9 — British GP.<br>Best of luck. See you on the leaderboard.</p>
+  </div>
+
+  <div class="footer-tag" id="footerTag">Race. <span class="accent">Predict.</span> Win.</div>
+</div>
+
+<!-- Hidden iframe target so the page never navigates away to Google -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<form id="gform" action="https://docs.google.com/forms/d/e/1FAIpQLSdCv2yN9NgUHuKQsLrV_rrlRbsXUt5Oud0gbWS5bAPlKKCmLQ/formResponse" method="POST" target="hidden_iframe" style="display:none;">
+  <input type="text" name="entry.411882974" id="g_name">
+  <input type="text" name="entry.938830159" id="g_p1">
+  <input type="text" name="entry.2054301081" id="g_p2">
+  <input type="text" name="entry.20680567" id="g_p3">
+  <input type="text" name="entry.1570405660" id="g_dotd">
+</form>
+
+<script>
+  const DRIVERS = [
+    "Lando Norris (McLaren)",
+    "Oscar Piastri (McLaren)",
+    "George Russell (Mercedes)",
+    "Kimi Antonelli (Mercedes)",
+    "Charles Leclerc (Ferrari)",
+    "Lewis Hamilton (Ferrari)",
+    "Max Verstappen (Red Bull)",
+    "Isack Hadjar (Red Bull)",
+    "Liam Lawson (Racing Bulls)",
+    "Arvid Lindblad (Racing Bulls)",
+    "Alex Albon (Williams)",
+    "Carlos Sainz (Williams)",
+    "Fernando Alonso (Aston Martin)",
+    "Lance Stroll (Aston Martin)",
+    "Oliver Bearman (Haas)",
+    "Esteban Ocon (Haas)",
+    "Gabriel Bortoleto (Audi)",
+    "Nico Hulkenberg (Audi)",
+    "Pierre Gasly (Alpine)",
+    "Franco Colapinto (Alpine)",
+    "Sergio Perez (Cadillac)",
+    "Valtteri Bottas (Cadillac)"
+  ];
+
+  ["p1","p2","p3","dotd"].forEach(id => {
+    const sel = document.getElementById(id);
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select driver";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    sel.appendChild(placeholder);
+    DRIVERS.forEach(d => {
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = d;
+      sel.appendChild(opt);
+    });
+  });
+
+  function submitPrediction() {
+    const name = document.getElementById("name").value.trim();
+    const p1 = document.getElementById("p1").value;
+    const p2 = document.getElementById("p2").value;
+    const p3 = document.getElementById("p3").value;
+    const dotd = document.getElementById("dotd").value;
+
+    if (!name || !p1 || !p2 || !p3 || !dotd) {
+      alert("Please fill in every field before submitting.");
+      return;
+    }
+
+    document.getElementById("g_name").value = name;
+    document.getElementById("g_p1").value = p1;
+    document.getElementById("g_p2").value = p2;
+    document.getElementById("g_p3").value = p3;
+    document.getElementById("g_dotd").value = dotd;
+
+    document.getElementById("gform").submit();
+
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("submitBtn").textContent = "Submitting...";
+
+    setTimeout(() => {
+      document.getElementById("predictionForm").classList.add("hidden");
+      document.getElementById("pointsStrip").classList.add("hidden");
+      document.getElementById("submitBtn").style.display = "none";
+      document.getElementById("successScreen").classList.add("active");
+    }, 900);
+  }
+</script>
+
+</body>
+</html>
